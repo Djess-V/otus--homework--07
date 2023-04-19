@@ -47,7 +47,6 @@
     "webpack-dev-server": "^4.13.2"
   },
   "dependencies": {
-    "dotenv": "^16.0.3",
     "ymaps": "^0.2.1"
   },
   "lint-staged": {
