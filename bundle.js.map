@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","mappings":"AAAAA,SAASC,eAAe,OAAOC,UAAY","sources":["webpack://otus--homework--07/./src/index.js"],"sourcesContent":["document.getElementById(\"app\").innerHTML = \"Hello, World!\";\n"],"names":["document","getElementById","innerHTML"],"sourceRoot":""}
