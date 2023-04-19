@@ -4,13 +4,14 @@ module.exports = {
     es2021: true,
     "jest/globals": true,
   },
-  extends: ["airbnb-base", "prettier"],
+  extends: ["airbnb-base", "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["jest"],
+  plugins: ["jest", "prettier"],
   rules: {
+    "prettier/prettier": "error",
     "import/prefer-default-export": "off",
     "max-len": [
       "error",
