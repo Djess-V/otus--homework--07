@@ -1,5 +1,10 @@
 export async function readFromStorage() {
-  const list = await JSON.parse(localStorage.getItem("list"));
+  let list;
+  try {
+    list = await JSON.parse(localStorage.getItem("list"));
 
-  return list instanceof Array ? list : [];
+    return Array.isArray(list) ? list : [];
+  } catch (e) {
+    return [];
+  }
 }

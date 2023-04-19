@@ -1,5 +1,4 @@
 import ymaps from "ymaps";
-import { API_KEY_MAP } from "../data/constants";
 
 export async function drawMap(el, weather, firstDrawing = false) {
   try {
@@ -18,7 +17,7 @@ export async function drawMap(el, weather, firstDrawing = false) {
     }
 
     const maps = await ymaps.load(
-      `https://api-maps.yandex.ru/2.1/?apikey=${API_KEY_MAP}&lang=ru_RU`
+      `https://api-maps.yandex.ru/2.1/?apikey=${process.env.API_KEY_MAP}&lang=ru_RU`
     );
 
     const map = new maps.Map("map", {

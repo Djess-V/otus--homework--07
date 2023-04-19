@@ -1,3 +1,7 @@
-export function saveInStorage(items) {
-  localStorage.setItem("list", JSON.stringify(items));
+export async function saveInStorage(items) {
+  try {
+    localStorage.setItem("list", JSON.stringify(items));
+  } catch (e) {
+    console.log("Ошибка сохранения данных в localStorage");
+  }
 }
