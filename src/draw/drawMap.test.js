@@ -1,5 +1,6 @@
 import ymaps from "ymaps";
 import { drawMap } from "./drawMap";
+import { API_KEY_MAP } from "../data/constants";
 
 describe("drawMap", () => {
   let el;
@@ -55,7 +56,7 @@ describe("drawMap", () => {
 
     expect(load).toHaveBeenCalled();
     expect(load).toHaveBeenCalledWith(
-      `https://api-maps.yandex.ru/2.1/?apikey=${process.env.API_KEY_MAP}&lang=ru_RU`
+      `https://api-maps.yandex.ru/2.1/?apikey=${API_KEY_MAP}&lang=ru_RU`
     );
   });
 
