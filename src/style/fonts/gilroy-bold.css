@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Gilroy-Bold";
+  src: url("./gilroy-bold/gilroy-bold.eot"); /* IE 9 Compatibility Mode */
+  src: url("./gilroy-bold/gilroy-bold.eot?#iefix") format("embedded-opentype"),
+    /* IE < 9 */ url("./gilroy-bold/gilroy-bold.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("./gilroy-bold/gilroy-bold.woff")
+      format("woff"),
+    /* Firefox >= 3.6, any other modern browser */
+      url("./gilroy-bold/gilroy-bold.ttf") format("truetype");
+  /* Safari, Android, iOS */
+  font-display: swap;
+}

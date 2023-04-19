@@ -1,1 +1,4 @@
-document.getElementById("app").innerHTML = "Hello, World!";
+import { getWeather } from "./getWeather";
+import "./style/style.css";
+
+getWeather(document.getElementById("app"));
