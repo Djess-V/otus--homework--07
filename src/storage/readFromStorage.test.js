@@ -15,7 +15,7 @@ describe("readFromStorage", () => {
     expect(items).toEqual([1, 2, 3, 4, 5]);
   });
 
-  test("return is Array", async () => {
+  test("not return is Array", async () => {
     localStorage.setItem("list", JSON.stringify("Hello, World!"));
 
     const items = await readFromStorage();

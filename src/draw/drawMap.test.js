@@ -68,7 +68,9 @@ describe("drawMap", () => {
     };
 
     const maps = {
-      Map(id, opt) {},
+      Map(id, opt) {
+        console.log(1);
+      },
     };
 
     const map = jest.spyOn(maps, "Map");

@@ -113,7 +113,7 @@ describe("getWeather", () => {
     );
   });
 
-  test("Invalid data entered into the input", async () => {
+  test("Checking the error output in case of incorrect data entry", async () => {
     global.fetch = jest.fn().mockResolvedValueOnce({ json: () => geo });
 
     requestWeather.mockResolvedValueOnce(weather);
