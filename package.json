@@ -7,7 +7,6 @@
     "test": "jest",
     "lint": "prettier --check . && eslint .",
     "lint:fix": "prettier --write . && eslint . --fix",
-    "prepare": "husky install",
     "dev": "webpack serve",
     "build": "webpack --env production"
   },
@@ -27,8 +26,10 @@
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.5",
     "@types/jest": "^29.5.1",
+    "@types/lodash": "^4.14.194",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
+    "@yandex/ymaps3-types": "^0.0.5",
     "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
@@ -36,6 +37,7 @@
     "eslint": "^8.37.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-prettier": "^4.2.1",
@@ -52,7 +54,6 @@
     "webpack-dev-server": "^4.13.2"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.194",
     "lodash": "^4.17.21",
     "ymaps": "^0.2.1"
   },
