@@ -11,13 +11,13 @@ interface ILoopVars {
   last: number;
 }
 
-export class Templater {
+export default class Templater {
   template = "";
 
   regExpTemplate = {
     data: /\{\{(.*?)\}\}/g,
-    term: /\{\{if (\w+)\}\}(.+?)\{\{endif\}\}/g,
-    loop: /\{\{for (\w+)\}\}(.+?)\{\{endfor\}\}/g,
+    term: /\{\{if (.+?)\}\}(.+?)\{\{endif\}\}/g,
+    loop: /\{\{for (.+?)\}\}(.+?)\{\{endfor\}\}/g,
   };
 
   loopVars: ILoopVars = {
@@ -39,10 +39,14 @@ export class Templater {
 
   private parseData(tmp: string, ctx: IContext, item: null | string = null) {
     const replacerData = (m: string, subStr: string) => {
+      if (!(ctx instanceof Object)) {
+        return String(ctx);
+      }
+
       const matches = _.at(ctx, [subStr]);
 
       if (matches.length === 0) {
-        throw new Error("Ошибка парсинга данных!");
+        return "";
       }
 
       return String(matches[0]);
@@ -63,12 +67,24 @@ export class Templater {
 
       partsTerm = partsTerm.map((part) => part.trim());
 
-      if (partsTerm.length !== 2) {
-        throw new Error("Ошибка парсинга цикла!");
+      if (partsTerm.length > 2) {
+        return newStr;
+      }
+
+      if (ctx instanceof Array) {
+        this.loopVars.count = ctx.length;
+        this.loopVars.last = ctx.length - 1;
+        for (let i = 0; i < this.loopVars.count; i += 1) {
+          this.loopVars.index = i;
+          const checkTerm = this.parseTerm(subStr, ctx[i], true);
+          newStr += this.parseData(checkTerm, ctx[i]);
+        }
+
+        return newStr;
       }
 
       if (!(partsTerm[0] in ctx)) {
-        throw new Error("Ошибка парсинга данных!");
+        return newStr;
       }
 
       if (ctx[partsTerm[0]] instanceof Array) {
@@ -80,8 +96,6 @@ export class Templater {
           const checkTerm = this.parseTerm(subStr, array[i], true);
           newStr += this.parseData(checkTerm, array[i], partsTerm[1]);
         }
-      } else {
-        throw new Error("Ошибка парсинга данных!");
       }
 
       return newStr;
@@ -121,7 +135,15 @@ export class Templater {
               return newStr;
             }
             case "index": {
+              term = term.replace("$loop->index", String(this.loopVars.index));
               if (eval(term)) {
+                return this.parseData(subStr, ctx);
+              }
+
+              return newStr;
+            }
+            case "notlast": {
+              if (this.loopVars.index !== this.loopVars.last) {
                 return this.parseData(subStr, ctx);
               }
 
@@ -148,3 +170,5 @@ export class Templater {
     return tmp.replace(this.regExpTemplate.term, replacerTerm);
   }
 }
+
+export const templater = new Templater();
