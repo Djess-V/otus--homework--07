@@ -1,7 +1,17 @@
 import { API_KEY_WEATHER } from "../data/constants";
 
-export async function requestWeather(latitude, longitude, cityName = null) {
-  let weather = {};
+export interface IWeather {
+  [key: string]: any;
+  cod?: string;
+  message?: string;
+}
+
+export async function reqWeather(
+  latitude: number | null,
+  longitude: number | null,
+  cityName: null | string = null
+) {
+  let weather: IWeather = {};
   try {
     let response;
 
@@ -19,9 +29,15 @@ export async function requestWeather(latitude, longitude, cityName = null) {
       weather = await response.json();
     }
 
+    if (weather.main && "temp" in weather.main) {
+      weather.main.temp = Math.trunc(Number(weather.main.temp) - 273.15);
+    }
+
     return weather;
   } catch (e) {
-    console.log(e);
-    return weather;
+    return {
+      cod: "404",
+      message: e.message,
+    };
   }
 }

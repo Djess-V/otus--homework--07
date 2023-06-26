@@ -4,10 +4,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = (env) => ({
-  entry: { index: "./src/index.js" },
+  entry: { index: "./src/index.ts" },
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
   output: {
     path: resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].[hash].js",
     clean: true,
     environment: {
       arrowFunction: false,
@@ -25,6 +28,13 @@ module.exports = (env) => ({
           options: {
             presets: ["@babel/preset-env"],
           },
+        },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
         },
       },
       {

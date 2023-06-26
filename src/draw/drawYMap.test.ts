@@ -1,10 +1,11 @@
 import ymaps from "ymaps";
-import { drawMap } from "./drawMap";
+import { drawYMap } from "./drawYMap";
+import { IWeather } from "../requests/reqWeather";
 import { API_KEY_MAP } from "../data/constants";
 
-describe("drawMap", () => {
-  let el;
-  let weather;
+describe("drawYMap", () => {
+  let el: HTMLElement;
+  let weather: IWeather;
 
   beforeEach(() => {
     weather = {
@@ -17,42 +18,34 @@ describe("drawMap", () => {
         },
       ],
       coord: {
-        lat: "37.751",
-        lon: "-97.822",
+        lat: 37.751,
+        lon: -97.822,
       },
       name: "Вашингтон",
     };
-    el = document.createElement("section");
+
+    el = document.createElement("div");
+    el.id = "map";
+
+    window.document.body.appendChild(el);
   });
 
   test("is a function", () => {
-    expect(drawMap).toBeInstanceOf(Function);
+    expect(drawYMap).toBeInstanceOf(Function);
   });
 
   test("UI check on the first rendering", () => {
-    drawMap(el, weather, true);
+    drawYMap(weather);
 
-    expect(el.querySelector(".field__map").innerHTML).not.toBeUndefined();
-  });
+    const map = document.getElementById("map") as HTMLElement;
 
-  test("checking the UI in subsequent drawings", () => {
-    const map = document.createElement("div");
-
-    map.classList.add("field__map");
-    map.classList.add("map");
-    map.id = "map";
-
-    el.insertAdjacentElement("beforeEnd", map);
-
-    drawMap(el, weather);
-
-    expect(el.querySelector(".field__map").innerHTML).not.toBeUndefined();
+    expect(map.innerHTML).not.toBeUndefined();
   });
 
   test("should fetch maps", () => {
     const load = jest.spyOn(ymaps, "load");
 
-    drawMap(el, weather, true);
+    drawYMap(weather);
 
     expect(load).toHaveBeenCalled();
     expect(load).toHaveBeenCalledWith(
@@ -68,14 +61,16 @@ describe("drawMap", () => {
     };
 
     const maps = {
-      Map(id, opt) {},
+      Map(id, opt) {
+        console.log(1);
+      },
     };
 
     const map = jest.spyOn(maps, "Map");
 
     load.mockResolvedValue(maps);
 
-    await drawMap(el, weather, true);
+    await drawYMap(weather);
 
     expect(map).toHaveBeenCalled();
     expect(map).toHaveBeenCalledWith("map", options);
@@ -87,7 +82,7 @@ describe("drawMap", () => {
 
     load.mockRejectedValue(1);
 
-    await drawMap(el, weather, true);
+    await drawYMap(weather);
 
     expect(log).toHaveBeenCalled();
     expect(log).toHaveBeenCalledWith("Failed to load Yandex Maps", 1);

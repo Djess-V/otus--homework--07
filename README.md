@@ -21,4 +21,4 @@ _**[Развёрнуто здесь](https://djess-v.github.io/otus--homework--0
 
 <h2>Структура проекта</h2>
 
-<img alt="weather" src="./src/assets/image/структура_проекта.jpg" width="385px" height="472px"/>
+<img alt="weather" src="./src/assets/image/structure.jpg" width="385px" height="488px"/>
